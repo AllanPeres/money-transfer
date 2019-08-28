@@ -15,7 +15,7 @@ create table account (
 create table account_history (
     id long auto_increment not null,
     account_id long not null,
-    value numeric (10,2) not null,
+    value decimal (10,2) not null,
 
     constraint pk_account_history primary key (id),
     constraint fk_account_account_history foreign key (account_id) references (id)
