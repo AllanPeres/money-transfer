@@ -20,18 +20,18 @@ create table account_history (
     value decimal (10,2) not null,
 
     constraint pk_account_history primary key (id),
-    constraint fk_account_account_history foreign key (account_id) references (id)
+    constraint fk_account_account_history foreign key (account_id) references account(id)
 )
 ;
 create table transfer_history (
     id long auto_increment not null,
-    debt_account_id long not null,
+    debit_account_id long not null,
     credit_account_id long not null,
     datetime timestamp not null,
 
     constraint pk_transfer_history primary key (id),
-    constraint fk_transfer_history_debt_account foreign key (debt_account_id) references (id),
-    constraint fk_transfer_history_credit_account foreign key (credit_account_id) references (id)
+    constraint fk_transfer_history_debit_account foreign key (debit_account_id) references account(id),
+    constraint fk_transfer_history_credit_account foreign key (credit_account_id) references account(id)
 )
 ;
 insert into account (account_number)

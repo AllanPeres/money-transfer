@@ -21,7 +21,7 @@ public class AccountHistoryService {
         return currentCurrency.compareTo(transferValue) >= 0;
     }
 
-    public AccountHistory includeHistory(Long accountId, BigDecimal value) {
-        return accountHistoryDAO.include(accountId, value);
+    public AccountHistory save(Long accountId, BigDecimal value) {
+        return accountHistoryDAO.save(accountId, value);
     }
 }

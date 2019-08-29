@@ -5,13 +5,15 @@ import java.math.BigDecimal;
 public class SummarizedAccount {
 
     private Long id;
+    private String accountNumber;
     private BigDecimal currentValue;
 
     public SummarizedAccount() {
     }
 
-    public SummarizedAccount(Long id, BigDecimal currentValue) {
+    public SummarizedAccount(Long id, String accountNumber, BigDecimal currentValue) {
         this.id = id;
+        this.accountNumber = accountNumber;
         this.currentValue = currentValue;
     }
 
@@ -29,5 +31,13 @@ public class SummarizedAccount {
 
     public void setCurrentValue(BigDecimal currentValue) {
         this.currentValue = currentValue;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }

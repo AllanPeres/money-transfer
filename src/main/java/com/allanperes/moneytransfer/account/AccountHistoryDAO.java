@@ -18,11 +18,11 @@ public class AccountHistoryDAO extends DatabaseConnection {
                 .where(ACCOUNT.ACCOUNT_NUMBER.eq(accountNumber)).fetchOne().value1();
     }
 
-    AccountHistory include(Long accountId, BigDecimal value) {
+    AccountHistory save(Long accountId, BigDecimal value) {
         return dsl.insertInto(ACCOUNT_HISTORY)
                 .columns(ACCOUNT_HISTORY.ACCOUNT_ID, ACCOUNT_HISTORY.VALUE)
                 .values(accountId, value)
-                .returning(ACCOUNT_HISTORY.ID)
+                .returning(ACCOUNT_HISTORY.ID, ACCOUNT_HISTORY.ACCOUNT_ID, ACCOUNT_HISTORY.VALUE)
                 .fetchOne()
                 .into(AccountHistory.class);
     }

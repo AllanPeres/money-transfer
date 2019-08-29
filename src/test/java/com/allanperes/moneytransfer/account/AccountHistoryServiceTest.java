@@ -43,10 +43,14 @@ public class AccountHistoryServiceTest {
     @Test
     @DisplayName("Including new account history")
     void shouldInsertNewAccountHistory() {
-        BigDecimal value = BigDecimal.valueOf(-10);
+        BigDecimal expectedValue = BigDecimal.valueOf(-10.00);
         Long accountId = 1L;
         Long expectedId = 3L;
-        AccountHistory returnedAccountHistory = accountHistoryService.includeHistory(accountId, value);
-        assertEquals(expectedId, returnedAccountHistory.getId());
+        AccountHistory returnedAccountHistory = accountHistoryService.save(accountId, expectedValue);
+        assertAll(
+                () -> assertEquals(expectedId, returnedAccountHistory.getId()),
+                () -> assertEquals(0, returnedAccountHistory.getValue().compareTo(expectedValue))
+        );
+        ;
     }
 }

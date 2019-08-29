@@ -5,27 +5,28 @@ import java.time.LocalDateTime;
 
 public class Transfer {
 
-    private String debtAccountNumber;
+    private String debitAccountNumber;
     private String creditAccountNumber;
     private BigDecimal value;
     private LocalDateTime dateTime;
 
     public Transfer() {
-    }
-
-    public Transfer(String debtAccountNumber, String creditAccountNumber, BigDecimal value) {
-        this.debtAccountNumber = debtAccountNumber;
-        this.creditAccountNumber = creditAccountNumber;
-        this.value = value;
         this.dateTime = LocalDateTime.now();
     }
 
-    public String getDebtAccountNumber() {
-        return debtAccountNumber;
+    public Transfer(String debitAccountNumber, String creditAccountNumber, BigDecimal value) {
+        this();
+        this.debitAccountNumber = debitAccountNumber;
+        this.creditAccountNumber = creditAccountNumber;
+        this.value = value;
     }
 
-    public void setDebtAccountNumber(String debtAccountNumber) {
-        this.debtAccountNumber = debtAccountNumber;
+    public String getDebitAccountNumber() {
+        return debitAccountNumber;
+    }
+
+    public void setDebitAccountNumber(String debitAccountNumber) {
+        this.debitAccountNumber = debitAccountNumber;
     }
 
     public String getCreditAccountNumber() {

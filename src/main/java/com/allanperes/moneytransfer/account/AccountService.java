@@ -16,4 +16,9 @@ public class AccountService {
         return Optional.ofNullable(accountDAO.findByAccountNumber(accountNumber))
                 .orElseThrow(() -> new RuntimeException("This account doens't exists " + accountNumber));
     }
+
+    public SummarizedAccount findSummarizedAccountByAccountNumber(String accountNumber) {
+        return Optional.ofNullable(accountDAO.findSummarizedAccountByAccountNumber(accountNumber))
+                .orElseThrow(() -> new RuntimeException("This account doens't exists " + accountNumber));
+    }
 }

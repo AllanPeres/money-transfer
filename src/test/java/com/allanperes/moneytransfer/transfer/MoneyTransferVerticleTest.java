@@ -1,5 +1,9 @@
 package com.allanperes.moneytransfer.transfer;
 
+import com.allanperes.moneytransfer.account.AccountDAO;
+import com.allanperes.moneytransfer.account.AccountHistoryDAO;
+import com.allanperes.moneytransfer.account.AccountHistoryService;
+import com.allanperes.moneytransfer.account.AccountService;
 import com.allanperes.moneytransfer.infrastructure.MoneyTransferVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.client.WebClient;
@@ -14,14 +18,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @ExtendWith(VertxExtension.class)
 public class MoneyTransferVerticleTest {
 
     @BeforeAll
     static void setup(Vertx vertx, VertxTestContext context) {
-        vertx.deployVerticle(new MoneyTransferVerticle(), context.completing());
+        MoneyTransferVerticle moneyTransferVerticle = new MoneyTransferVerticle(
+                new TransferService(
+                        new AccountService(new AccountDAO()),
+                        new AccountHistoryService(new AccountHistoryDAO()),
+                        new TransferHistoryService(new TransferHistoryDAO())
+                ),
+                new AccountService(new AccountDAO())
+        );
+        vertx.deployVerticle(moneyTransferVerticle, context.completing());
     }
 
     @AfterAll

@@ -6,22 +6,26 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TransferServiceTest {
 
     private TransferService transferService = new TransferService(
             new AccountService(new AccountDAO()),
-            new AccountHistoryService(new AccountHistoryDAO()));
+            new AccountHistoryService(new AccountHistoryDAO()),
+            new TransferHistoryService(new TransferHistoryDAO()));
 
     @Test
     @DisplayName("Should transfer money")
     void shouldTransferMoney() {
-        String debtAccount = "3216547";
+        String debitAccount = "3216547";
         String creditAccount = "124578";
         BigDecimal transferValue = BigDecimal.valueOf(35.4);
-        Transfer transfer = new Transfer(debtAccount, creditAccount, transferValue);
-        SummarizedAccount returnedValue = transferService.doTransfer(transfer);
-        assertNull(returnedValue);
+        Transfer transfer = new Transfer(debitAccount, creditAccount, transferValue);
+        SummarizedAccount returnedValue = transferService.transfer(transfer);
+        assertAll(
+                () -> assertEquals(debitAccount, returnedValue.getAccountNumber()),
+                () -> assertEquals(returnedValue.getCurrentValue(), BigDecimal.valueOf(317.49))
+        );
     }
 }
