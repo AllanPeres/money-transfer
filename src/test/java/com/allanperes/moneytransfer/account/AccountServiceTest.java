@@ -4,8 +4,7 @@ import org.jooq.example.db.h2.tables.pojos.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountServiceTest {
 
@@ -21,5 +20,15 @@ public class AccountServiceTest {
                 () -> assertEquals(accountDesired.getId(), accountFinded.getId()),
                 () -> assertEquals(accountDesired.getAccountNumber(), accountFinded.getAccountNumber())
         );
+    }
+
+    @Test
+    @DisplayName("Finding accounts by account number")
+    void findAccountsByAccountNumber1() {
+        String accountNumber = "1245781";
+        assertThrows(
+                RuntimeException.class,
+                () -> accountService.findByAccountNumber(accountNumber),
+                "This account doens't exists " + accountNumber);
     }
 }

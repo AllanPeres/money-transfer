@@ -1,3 +1,5 @@
+drop all objects
+;
 drop table if exists account
 ;
 drop table if exists account_history
