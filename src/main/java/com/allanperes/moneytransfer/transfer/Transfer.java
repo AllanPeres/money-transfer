@@ -1,5 +1,7 @@
 package com.allanperes.moneytransfer.transfer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -8,6 +10,7 @@ public class Transfer {
     private String debitAccountNumber;
     private String creditAccountNumber;
     private BigDecimal value;
+    @JsonIgnore
     private LocalDateTime dateTime;
 
     public Transfer() {

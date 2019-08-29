@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TransferServiceTest {
 
@@ -25,7 +26,7 @@ public class TransferServiceTest {
         SummarizedAccount returnedValue = transferService.transfer(transfer);
         assertAll(
                 () -> assertEquals(debitAccount, returnedValue.getAccountNumber()),
-                () -> assertEquals(returnedValue.getCurrentValue(), BigDecimal.valueOf(317.49))
+                () -> assertEquals(returnedValue.getCurrentValue(), BigDecimal.valueOf(251.04))
         );
     }
 }

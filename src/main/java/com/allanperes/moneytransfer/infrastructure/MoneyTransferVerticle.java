@@ -37,8 +37,7 @@ public class MoneyTransferVerticle extends AbstractVerticle {
                 .produces("application/json")
                 .handler(postTransferBetweenAccountsHandler());
 
-        router.get("/api").failureHandler(failureHandler());
-        router.post("/api").failureHandler(failureHandler());
+        router.route("/api/*").failureHandler(failureHandler());
 
         vertx.createHttpServer()
                 .requestHandler(router)
@@ -72,9 +71,11 @@ public class MoneyTransferVerticle extends AbstractVerticle {
 
     private Handler<RoutingContext> failureHandler() {
         return routingContext -> {
-            var statusCode = routingContext.statusCode();
-            var response = routingContext.response();
-            response.setStatusCode(statusCode).end("Something went wrong");
+            routingContext.response()
+                    .setStatusCode(500)
+                    .setChunked(true)
+                    .write(routingContext.failure().getMessage())
+                    .end();
         };
     }
 }

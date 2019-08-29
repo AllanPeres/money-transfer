@@ -26,7 +26,7 @@ public class TransferService {
             this.includeHistories(transfer);
             return accountService.findSummarizedAccountByAccountNumber(transfer.getDebitAccountNumber());
         }
-        throw new RuntimeException("There is not enogh money on account " + transfer.getDebitAccountNumber());
+        throw new RuntimeException("There is not enough money on account " + transfer.getDebitAccountNumber());
     }
 
     private void includeHistories(Transfer transfer) {

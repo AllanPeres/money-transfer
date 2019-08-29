@@ -22,7 +22,8 @@ public class AccountDAO extends DatabaseConnection {
                 .from(ACCOUNT.join(ACCOUNT_HISTORY).on(ACCOUNT.ID.eq(ACCOUNT_HISTORY.ACCOUNT_ID)))
                 .where(ACCOUNT.ACCOUNT_NUMBER.eq(accountNumber))
                 .groupBy(ACCOUNT.ID, ACCOUNT.ACCOUNT_NUMBER)
-                .fetchOne()
+                .fetchOptional()
+                .orElseThrow(() -> new RuntimeException("This account doens't exists " + accountNumber))
                 .into(SummarizedAccount.class);
     }
 }
