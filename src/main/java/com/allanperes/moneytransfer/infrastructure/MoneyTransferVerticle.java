@@ -1,6 +1,5 @@
 package com.allanperes.moneytransfer.infrastructure;
 
-import com.allanperes.moneytransfer.account.AccountDAO;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;

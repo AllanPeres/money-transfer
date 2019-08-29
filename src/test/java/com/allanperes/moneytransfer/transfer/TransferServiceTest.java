@@ -1,8 +1,6 @@
 package com.allanperes.moneytransfer.transfer;
 
 import com.allanperes.moneytransfer.account.*;
-import org.jooq.example.db.h2.tables.AccountHistory;
-import org.jooq.example.db.h2.tables.pojos.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

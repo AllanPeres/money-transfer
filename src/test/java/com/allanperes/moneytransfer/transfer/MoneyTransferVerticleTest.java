@@ -2,7 +2,6 @@ package com.allanperes.moneytransfer.transfer;
 
 import com.allanperes.moneytransfer.infrastructure.MoneyTransferVerticle;
 import io.vertx.core.Vertx;
-import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.codec.BodyCodec;
 import io.vertx.junit5.VertxExtension;
