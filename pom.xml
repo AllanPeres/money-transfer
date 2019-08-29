@@ -223,6 +223,24 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.1</version>
             </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>vertx-maven-plugin</artifactId>
+                <version>1.0.9</version>
+                <executions>
+                    <execution>
+                        <id>vmp</id>
+                        <goals>
+                            <goal>initialize</goal>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <launcher>com.allanperes.moneytransfer.MoneyTransfer</launcher>
+                    <redeploy>false</redeploy>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

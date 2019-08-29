@@ -10,7 +10,11 @@ import com.allanperes.moneytransfer.transfer.TransferHistoryService;
 import com.allanperes.moneytransfer.transfer.TransferService;
 import io.vertx.core.Vertx;
 
+import java.util.logging.Logger;
+
 public class MoneyTransfer {
+
+    private static final Logger logger = Logger.getLogger(MoneyTransfer.class.getName());
 
     public static void main(String[] args) {
         Vertx vertx = Vertx.vertx();
@@ -22,5 +26,6 @@ public class MoneyTransfer {
                                 new AccountHistoryService(new AccountHistoryDAO()),
                                 new TransferHistoryService(new TransferHistoryDAO())),
                         accountService));
+        logger.info("Server intialized at port 8080");
     }
 }
