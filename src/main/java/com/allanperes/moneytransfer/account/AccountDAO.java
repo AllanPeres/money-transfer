@@ -7,7 +7,7 @@ import static org.jooq.example.db.h2.tables.Account.ACCOUNT;
 
 public class AccountDAO extends DatabaseConnection {
 
-    public Account getAccountByAccountNumber(String accountNumber) {
+    public Account findByAccountNumber(String accountNumber) {
         return dsl.select()
                 .from(ACCOUNT)
                 .where(ACCOUNT.ACCOUNT_NUMBER.eq(accountNumber))

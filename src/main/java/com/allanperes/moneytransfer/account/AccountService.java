@@ -1,19 +1,16 @@
 package com.allanperes.moneytransfer.account;
 
-import java.math.BigDecimal;
+import org.jooq.example.db.h2.tables.pojos.Account;
 
 public class AccountService {
 
     private AccountDAO accountDAO;
-    private AccountHistoryDAO accountHistoryDAO;
 
-    public AccountService(AccountDAO accountDAO, AccountHistoryDAO accountHistoryDAO) {
+    public AccountService(AccountDAO accountDAO) {
         this.accountDAO = accountDAO;
-        this.accountHistoryDAO = accountHistoryDAO;
     }
 
-    public boolean hasMoreThanTransferValue(String accountNumber, BigDecimal transferValue) {
-        BigDecimal currentCurrency = accountHistoryDAO.getCurrentCurrencyByAccountNumber(accountNumber);
-        return currentCurrency.compareTo(transferValue) >= 0;
+    public Account findByAccountNumber(String accountNumber) {
+        return accountDAO.findByAccountNumber(accountNumber);
     }
 }
