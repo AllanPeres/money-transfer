@@ -2,11 +2,6 @@
 
 Simple project for money transfering between two accounts
 
-# TODO
-Resolve overdraft when accessing concurrently the transfer \
-Make database connection be thread safe \
-Create concurrency tests
-
 ## Technologies
 Java 11 \
 Vertx 3.8.1 \
