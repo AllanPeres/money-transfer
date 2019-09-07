@@ -1,5 +1,6 @@
 package com.allanperes.moneytransfer.transfer;
 
+import org.jooq.Configuration;
 import org.jooq.example.db.h2.tables.pojos.TransferHistory;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class TransferHistoryService {
     }
 
 
-    public TransferHistory save(Long creditAccountDesired, Long debitAccountDesired, LocalDateTime dateTime) {
-        return transferHistoryDAO.create(creditAccountDesired, debitAccountDesired, dateTime);
+    public TransferHistory save(Configuration configuration, Long creditAccountDesired, Long debitAccountDesired, LocalDateTime dateTime) {
+        return transferHistoryDAO.create(configuration, creditAccountDesired, debitAccountDesired, dateTime);
     }
 }

@@ -10,15 +10,19 @@ import static org.jooq.impl.DSL.using;
 
 public class DatabaseConnection {
 
-    protected static DSLContext dsl;
+    private static final DatabaseProperties databaseProperties;
 
-    public DatabaseConnection() {
+    static {
+        databaseProperties = DatabaseProperties.getInstance();
+    }
+
+    public static DSLContext createConnection() {
         try {
-            DatabaseProperties databaseProperties = DatabaseProperties.getInstance();
             Connection connection = getConnection(databaseProperties.getUrl(),
                     databaseProperties.getUsername(),
                     databaseProperties.getPassword());
-            dsl = using(connection);
+            return using(connection);
+
         } catch (SQLException exeption) {
             throw new RuntimeException("Cannot connect to database, cause " + exeption.getMessage());
         }

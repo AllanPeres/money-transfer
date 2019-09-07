@@ -1,5 +1,6 @@
 package com.allanperes.moneytransfer.account;
 
+import org.jooq.Configuration;
 import org.jooq.example.db.h2.tables.pojos.AccountHistory;
 
 import java.math.BigDecimal;
@@ -21,7 +22,7 @@ public class AccountHistoryService {
         return currentCurrency.compareTo(transferValue) >= 0;
     }
 
-    public AccountHistory save(Long accountId, BigDecimal value) {
-        return accountHistoryDAO.save(accountId, value);
+    public AccountHistory save(Configuration configuration, Long accountId, BigDecimal value) {
+        return accountHistoryDAO.save(configuration, accountId, value);
     }
 }

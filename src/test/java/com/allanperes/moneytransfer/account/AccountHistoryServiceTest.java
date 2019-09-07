@@ -1,5 +1,6 @@
 package com.allanperes.moneytransfer.account;
 
+import org.jooq.DSLContext;
 import org.jooq.example.db.h2.tables.pojos.AccountHistory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 
+import static com.allanperes.moneytransfer.infrastructure.DatabaseConnection.createConnection;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -46,7 +48,8 @@ public class AccountHistoryServiceTest {
         BigDecimal expectedValue = BigDecimal.valueOf(-10.00);
         Long accountId = 1L;
         Long expectedId = 3L;
-        AccountHistory returnedAccountHistory = accountHistoryService.save(accountId, expectedValue);
+        DSLContext context = createConnection();
+        AccountHistory returnedAccountHistory = accountHistoryService.save(context.configuration(), accountId, expectedValue);
         assertAll(
                 () -> assertEquals(expectedId, returnedAccountHistory.getId()),
                 () -> assertEquals(0, returnedAccountHistory.getValue().compareTo(expectedValue))

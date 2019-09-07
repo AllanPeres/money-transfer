@@ -3,9 +3,13 @@ package com.allanperes.moneytransfer.transfer;
 import com.allanperes.moneytransfer.account.AccountHistoryService;
 import com.allanperes.moneytransfer.account.AccountService;
 import com.allanperes.moneytransfer.account.SummarizedAccount;
+import com.allanperes.moneytransfer.infrastructure.DatabaseConnection;
+import org.jooq.Configuration;
 import org.jooq.example.db.h2.tables.pojos.Account;
 
 import java.math.BigDecimal;
+
+import static com.allanperes.moneytransfer.infrastructure.DatabaseConnection.createConnection;
 
 public class TransferService {
 
@@ -21,7 +25,7 @@ public class TransferService {
         this.transferHistoryService = transferHistoryService;
     }
 
-    public SummarizedAccount transfer(Transfer transfer) {
+    public synchronized SummarizedAccount transfer(Transfer transfer) {
         if (accountHistoryService.hasEnoughValueForTransfer(transfer.getDebitAccountNumber(), transfer.getValue())) {
             this.includeHistories(transfer);
             return accountService.findSummarizedAccountByAccountNumber(transfer.getDebitAccountNumber());
@@ -30,18 +34,20 @@ public class TransferService {
     }
 
     private void includeHistories(Transfer transfer) {
-        Account debitAccount = this.accountService.findByAccountNumber(transfer.getDebitAccountNumber());
-        this.includeDebitHistory(debitAccount.getId(), transfer.getValue());
-        Account creditAccount = this.accountService.findByAccountNumber(transfer.getCreditAccountNumber());
-        this.includeCreditHistory(creditAccount.getId(), transfer.getValue());
-        this.transferHistoryService.save(creditAccount.getId(), debitAccount.getId(), transfer.getDateTime());
+        createConnection().transaction(configuration -> {
+            Account debitAccount = this.accountService.findByAccountNumber(transfer.getDebitAccountNumber());
+            this.includeDebitHistory(configuration, debitAccount.getId(), transfer.getValue());
+            Account creditAccount = this.accountService.findByAccountNumber(transfer.getCreditAccountNumber());
+            this.includeCreditHistory(configuration, creditAccount.getId(), transfer.getValue());
+            this.transferHistoryService.save(configuration, creditAccount.getId(), debitAccount.getId(), transfer.getDateTime());
+        });
     }
 
-    private void includeDebitHistory(Long accountId, BigDecimal debitValue) {
-        this.accountHistoryService.save(accountId, debitValue.negate());
+    private void includeDebitHistory(Configuration configuration, Long accountId, BigDecimal debitValue) {
+        this.accountHistoryService.save(configuration, accountId, debitValue.negate());
     }
 
-    private void includeCreditHistory(Long accountId, BigDecimal creditValue) {
-        this.accountHistoryService.save(accountId, creditValue);
+    private void includeCreditHistory(Configuration configuration,Long accountId, BigDecimal creditValue) {
+        this.accountHistoryService.save(configuration, accountId, creditValue);
     }
 }
